@@ -5,6 +5,6 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'always',
   site: 'https://DoctorDaddySir.github.io',
-  base: '/red-brixen-security-site',
+  base: '/',
   vite: { plugins: [tailwindcss()] },
 });
