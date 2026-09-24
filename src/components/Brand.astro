@@ -3,10 +3,11 @@ interface Props {
   compact?: boolean;
 }
 const { compact = false } = Astro.props;
+import { BASE } from '../lib/base';
 ---
 
 <a
-  href="/"
+  href={BASE + '/'}
   class:list={['brand', { compact }]}
   aria-label="Red Brixen Security — home"
 >

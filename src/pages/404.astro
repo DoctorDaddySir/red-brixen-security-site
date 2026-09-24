@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { BASE } from '../lib/base';
 ---
 
 <Base
@@ -14,7 +15,7 @@ import Base from '../layouts/Base.astro';
       path forward.
     </h1>
     <p>This page isn’t here. The work is.</p>
-    <a class="button" href="/">
+    <a class="button" href={BASE + '/'}>
       Back to the showcase <span aria-hidden="true">↗</span>
     </a>
   </section>

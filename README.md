@@ -13,6 +13,8 @@ npm run verify
 npm run preview
 ```
 
+With `base: '/red-brixen-security-site'` set for GitHub Pages, the dev and preview servers run under the `/red-brixen-security-site/` subpath — open `http://127.0.0.1:4321/red-brixen-security-site/` for local preview.
+
 Content lives in `src/data/profile.ts`; shared layouts and components live in `src/layouts` and `src/components`. `src/styles/global.css` contains design tokens, responsive rules, light/dark themes, and résumé print rules. Fonts are bundled locally. There is no backend, tracking, form submission, or remote font dependency.
 
 The initial draft is deliberately marked `noindex`. Hosting configuration and release gates follow in later milestones.

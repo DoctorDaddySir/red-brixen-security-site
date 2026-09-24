@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { profile, experience, skills } from '../data/profile';
+import { BASE } from '../lib/base';
 ---
 
 <Base
@@ -9,7 +10,7 @@ import { profile, experience, skills } from '../data/profile';
   resume
 >
   <div class="resume-toolbar shell">
-    <a class="text-link" href="/about/">
+    <a class="text-link" href={BASE + '/about/'}>
       ← Back to profile
     </a>
     <button class="print-button" type="button">

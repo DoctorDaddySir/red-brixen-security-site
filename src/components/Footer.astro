@@ -1,5 +1,6 @@
 ---
 import Brand from './Brand.astro';
+import { BASE } from '../lib/base';
 ---
 
 <footer class="site-footer shell">
@@ -8,8 +9,8 @@ import Brand from './Brand.astro';
     <p>Offensive perspective. Engineering discipline.</p>
   </div>
   <div class="footer-links">
-    <a href="/about/">Profile</a>
-    <a href="/resume/">Résumé</a>
+    <a href={BASE + '/about/'}>Profile</a>
+    <a href={BASE + '/resume/'}>Résumé</a>
     <a href="https://github.com/DoctorDaddySir">
       GitHub <span aria-hidden="true">↗</span>
     </a>

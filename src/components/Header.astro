@@ -1,16 +1,20 @@
 ---
 import Brand from './Brand.astro';
-const path = Astro.url.pathname;
+import { BASE } from '../lib/base';
+const path = Astro.url.pathname.replace(BASE, '');
 ---
 
 <header class="site-header shell">
   <Brand />
   <nav aria-label="Main navigation">
-    <a href="/#work">Selected work</a>
-    <a href="/about/" aria-current={path === '/about/' ? 'page' : undefined}>
+    <a href={BASE + '/#work'}>Selected work</a>
+    <a
+      href={BASE + '/about/'}
+      aria-current={path === '/about/' ? 'page' : undefined}
+    >
       About Trent
     </a>
-    <a class="nav-contact" href="/#contact">
+    <a class="nav-contact" href={BASE + '/#contact'}>
       Let’s connect <span aria-hidden="true">↗</span>
     </a>
   </nav>
