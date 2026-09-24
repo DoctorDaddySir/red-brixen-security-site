@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
-const base = '/red-brixen-security-site';
+const base = '/';
 for (const file of [
   'index.html',
   'about/index.html',
@@ -27,7 +27,7 @@ for (const file of [
   );
   for (const [, url] of html.matchAll(/(?:href|src)="([^"#]+)"/g)) {
     if (!url.startsWith('/')) continue;
-    assert(url.startsWith(base + '/'), `${file}: wrong base in ${url}`);
+    assert(url.startsWith(base), `${file}: wrong base in ${url}`);
     const pathname = decodeURIComponent(
       url.split(/[?#]/)[0].slice(base.length),
     );
