@@ -12,7 +12,7 @@ Validation: Astro diagnostics, formatting, and static production build pass.
 
 ## Milestone 3 — release readiness
 
-In progress: production metadata and automated checks for deployment paths, navigation, and published assets. Project subpath support was added in `0e95d14`.
+Complete: canonical and Open Graph metadata, sitemap, and automated checks for deployment paths, navigation, headings, indexing, and published assets. `npm run verify` passes. Live browser verification follows deployment. Project subpath support was added in `0e95d14`.
 
 ## Milestone 4 — deployment
 

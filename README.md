@@ -17,7 +17,7 @@ With `base: '/red-brixen-security-site'` set for GitHub Pages, the dev and previ
 
 Content lives in `src/data/profile.ts`; shared layouts and components live in `src/layouts` and `src/components`. `src/styles/global.css` contains design tokens, responsive rules, light/dark themes, and résumé print rules. Fonts are bundled locally. There is no backend, tracking, form submission, or remote font dependency.
 
-The initial draft is deliberately marked `noindex`. Hosting configuration and release gates follow in later milestones.
+Public pages include canonical and Open Graph metadata; only the 404 page is marked `noindex`. `npm run verify` checks types, formatting, the production build, internal links, local assets, indexing, headings, and a 500 KB individual asset budget.
 
 ## Milestones
 

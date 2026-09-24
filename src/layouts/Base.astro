@@ -9,8 +9,10 @@ interface Props {
   title: string;
   description: string;
   resume?: boolean;
+  noindex?: boolean;
 }
-const { title, description, resume = false } = Astro.props;
+const { title, description, resume = false, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
@@ -19,7 +21,13 @@ const { title, description, resume = false } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="robots" content="noindex, nofollow" />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Red Brixen Security" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#17191a" />
     <link rel="icon" type="image/svg+xml" href={BASE + '/favicon.svg'} />
