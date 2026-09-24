@@ -1,0 +1,76 @@
+---
+import type { projects } from '../data/profile';
+interface Props {
+  project: (typeof projects)[number];
+}
+const { project } = Astro.props;
+---
+
+<article class="project-card">
+  <div class:list={['project-art', project.visual]} aria-hidden="true">
+    {project.visual === 'fieldguide' ? (
+      <div class="guide-art">
+        <div class="guide-spine"></div>
+        <span>RED BRIXEN / FIELD NOTES</span>
+        <strong>
+          OFFENSIVE
+          <br />
+          SECURITY
+          <br />
+          FIELD GUIDE<span class="art-asterisk">✳</span>
+        </strong>
+        <div class="guide-bottom">
+          ENUMERATE. UNDERSTAND. DOCUMENT.<span>01—09</span>
+        </div>
+      </div>
+    ) : (
+      <div class="terminal-art">
+        <div class="terminal-bar">
+          <i></i>
+          <i></i>
+          <i></i>
+          <span>pentai / operator workspace</span>
+        </div>
+        <div class="terminal-body">
+          <p>
+            <span class="terminal-prompt">❯</span> pentai
+          </p>
+          <strong>
+            PENTAI<span>_</span>
+          </strong>
+          <p class="terminal-muted">A workspace for the human operator.</p>
+          <div class="terminal-lines">
+            <span>01</span> ENGAGEMENTS
+            <br />
+            <span>02</span> TERMINAL SESSIONS
+            <br />
+            <span>03</span> ACTIVITY LOGS
+          </div>
+          <p>
+            <span class="terminal-prompt">❯</span>{' '}
+            <span class="cursor-block"></span>
+          </p>
+        </div>
+      </div>
+    )}
+    <span class="art-corner">{project.number} / RB</span>
+  </div>
+  <div class="project-info">
+    <div class="project-meta">
+      <span>{project.category}</span>
+      <span>{project.status}</span>
+    </div>
+    <h3>
+      <a href={project.href}>
+        {project.title}
+        <span aria-hidden="true">↗</span>
+      </a>
+    </h3>
+    <p>{project.description}</p>
+    <ul class="tags" aria-label="Project topics">
+      {project.tags.map((tag) => (
+        <li>{tag}</li>
+      ))}
+    </ul>
+  </div>
+</article>

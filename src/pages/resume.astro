@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+import { profile, experience, skills } from '../data/profile';
+---
+
+<Base
+  title="Trent Shelton — Professional résumé | Red Brixen Security"
+  description="Trent Shelton’s professional experience, security and engineering skills, and education. Penetration testing and secure coding backed by software engineering."
+  resume
+>
+  <div class="resume-toolbar shell">
+    <a class="text-link" href="/about/">
+      ← Back to profile
+    </a>
+    <button class="print-button" type="button">
+      Print / Save as PDF <span aria-hidden="true">↗</span>
+    </button>
+  </div>
+  <article class="resume-sheet shell">
+    <header class="resume-heading">
+      <p class="eyebrow">PROFESSIONAL RÉSUMÉ</p>
+      <h1>Trent Shelton</h1>
+      <p class="resume-focus">Penetration testing & secure coding</p>
+      <div class="resume-contact">
+        <span>{profile.location}</span>
+        <a href={profile.github}>github.com/DoctorDaddySir</a>
+      </div>
+    </header>
+    <section class="resume-section">
+      <h2>Profile</h2>
+      <p>
+        Security-focused software professional with experience building,
+        reviewing, and securing enterprise applications. Brings practical
+        backend engineering expertise across Java, Spring, REST APIs,
+        authorization controls, third-party integrations, and dependency
+        management, with a focus on penetration testing and secure coding.
+      </p>
+    </section>
+    <section class="resume-section">
+      <h2>Experience</h2>
+      <div>
+        {experience.map((job) => (
+          <section class="resume-job">
+            <div class="resume-job-heading">
+              <div>
+                <h3>{job.role}</h3>
+                <p class="company">{job.company}</p>
+              </div>
+              <p class="job-period">{job.period}</p>
+            </div>
+            <ul>
+              {job.bullets.map((bullet) => (
+                <li>{bullet}</li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </section>
+    <section class="resume-section">
+      <h2>Technical skills</h2>
+      <dl class="resume-skills">
+        {skills.map((group) => (
+          <div>
+            <dt>{group.title}</dt>
+            <dd>{group.items}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+    <section class="resume-section">
+      <h2>Education</h2>
+      <div>
+        <h3>Bachelor of Science — Cybersecurity</h3>
+        <p>In progress</p>
+      </div>
+    </section>
+  </article>
+  <script>
+    document
+      .querySelector('.print-button')
+      ?.addEventListener('click', () => window.print());
+  </script>
+</Base>
