@@ -5,6 +5,9 @@ export const profile = {
   introduction:
     'I work at the intersection of offensive security and software engineering. My focus is understanding how applications break—and how to build them better.',
   github: 'https://github.com/DoctorDaddySir',
+  email: 'trent.shelton.primary@gmail.com',
+  credential:
+    'https://credentials.offsec.com/e09b9888-70b7-4542-a8cc-a308d86728d5',
 };
 
 export const capabilities = [
@@ -49,9 +52,30 @@ export const projects = [
     description:
       'An operator-driven CLI project for organizing penetration-testing engagements, terminal sessions, and the evidence they produce.',
     tags: ['Java', 'CLI tooling', 'Workflow design'],
-    href: 'https://github.com/DoctorDaddySir/pentai',
+    href: 'mailto:trent.shelton.primary@gmail.com?subject=Let%E2%80%99s%20talk%20about%20Pentai',
     visual: 'pentai',
-    status: 'In development',
+    status: 'Private project · In development',
+  },
+];
+
+export const certifications = [
+  {
+    name: 'OffSec Certified Professional+ (OSCP+)',
+    issuer: 'OffSec',
+    detail: 'Issued June 2026 · Expires May 2029',
+    href: profile.credential,
+  },
+  {
+    name: 'AWS Certified Cloud Practitioner',
+    issuer: 'Amazon Web Services',
+    detail: '',
+    href: '',
+  },
+  {
+    name: 'Artificial Intelligence Master’s Program Certificate',
+    issuer: 'Simplilearn',
+    detail: 'Professional training certificate',
+    href: '',
   },
 ];
 

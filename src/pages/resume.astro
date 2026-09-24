@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { profile, experience, skills } from '../data/profile';
+import { profile, experience, skills, certifications } from '../data/profile';
 import { BASE } from '../lib/base';
 ---
 
@@ -24,6 +24,7 @@ import { BASE } from '../lib/base';
       <p class="resume-focus">Penetration testing & secure coding</p>
       <div class="resume-contact">
         <span>{profile.location}</span>
+        <a href={'mailto:' + profile.email}>{profile.email}</a>
         <a href={profile.github}>github.com/DoctorDaddySir</a>
       </div>
     </header>
@@ -68,6 +69,26 @@ import { BASE } from '../lib/base';
           </div>
         ))}
       </dl>
+    </section>
+    <section class="resume-section">
+      <h2>Certifications</h2>
+      <div class="resume-credentials">
+        {certifications.map((credential) => (
+          <div>
+            <h3>
+              {credential.href ? (
+                <a href={credential.href}>{credential.name} ↗</a>
+              ) : (
+                credential.name
+              )}
+            </h3>
+            <p>
+              {credential.issuer}
+              {credential.detail ? ` · ${credential.detail}` : ''}
+            </p>
+          </div>
+        ))}
+      </div>
     </section>
     <section class="resume-section">
       <h2>Education</h2>
