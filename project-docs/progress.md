@@ -16,7 +16,11 @@ Complete: canonical and Open Graph metadata, sitemap, and automated checks for d
 
 ## Milestone 4 — deployment
 
-GitHub rejected workflow creation because the OAuth login lacks workflow scope. Deployment therefore uses supported branch publishing (`master:/docs`). `npm run publish:build` verifies and copies the production output into `docs/`, including `.nojekyll`. The Actions template remains in `project-docs/` for future use. Live verification is pending.
+GitHub rejected workflow creation because the OAuth login lacks workflow scope. Deployment therefore uses supported branch publishing (`master:/docs`). `npm run publish:build` verifies and copies the production output into `docs/`, including `.nojekyll`. The Actions template remains in `project-docs/` for future use. Live verification passed on 2026-09-24. GitHub Pages run `36046600560` succeeded for deployment commit `00059dd`. Homepage, profile, and résumé navigation work; hero image loads; theme toggle works; all three pages fit a 390px viewport without horizontal overflow. The site is open in the internal browser.
+
+Live URL: https://doctordaddysir.github.io/red-brixen-security-site/
+
+Milestone commits: content `a74c51d`, release checks `93e94ae`, deployment `00059dd`. Browser checks are smoke tests, not a full accessibility audit.
 
 ## Content choices
 
