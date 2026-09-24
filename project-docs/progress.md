@@ -16,7 +16,7 @@ Complete: canonical and Open Graph metadata, sitemap, and automated checks for d
 
 ## Milestone 4 — deployment
 
-Pending. Investigation confirmed Pages uses legacy `master:/docs`, while the workflow template is under `docs/` and cannot run. Move the workflow into `.github/workflows`, switch Pages to Actions, and verify the published `dist` output.
+GitHub rejected workflow creation because the OAuth login lacks workflow scope. Deployment therefore uses supported branch publishing (`master:/docs`). `npm run publish:build` verifies and copies the production output into `docs/`, including `.nojekyll`. The Actions template remains in `project-docs/` for future use. Live verification is pending.
 
 ## Content choices
 

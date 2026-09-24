@@ -4,3 +4,5 @@ dist
 package-lock.json
 artifacts
 test-results
+
+docs/

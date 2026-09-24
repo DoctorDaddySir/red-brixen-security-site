@@ -26,4 +26,8 @@ Public pages include canonical and Open Graph metadata; only the 404 page is mar
 3. Accessibility, performance, metadata, configuration, and release verification.
 4. GitHub Pages deployment and production verification.
 
-Commit after every completed milestone. See `docs/progress.md` for evidence and outstanding work.
+Commit after every completed milestone. See `project-docs/progress.md` for evidence and outstanding work.
+
+## Publishing
+
+Pages publishes `master:/docs`. Run `npm run publish:build`, commit the generated `docs/` together with source changes, and push `master`. `.nojekyll` preserves Astro asset paths. Project documentation and the optional future Actions template live in `project-docs/`. The current GitHub login cannot create workflows, so deployment uses branch publishing.
