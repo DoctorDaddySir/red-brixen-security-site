@@ -2,7 +2,7 @@
 title: "MikroTrick and RouterOS: Why the Router Is Becoming an Attacker's Foothold"
 metaTitle: 'MikroTik MikroTrick: RouterOS Attacks Explained'
 description: 'CERT Polska observed attackers compromising internet-facing MikroTik routers. We examine CVE-2026-86060, CVE-2026-67277 and the larger lesson.'
-date: '2026-09-25'
+date: '2026-09-06'
 draft: false
 tags:
   [
