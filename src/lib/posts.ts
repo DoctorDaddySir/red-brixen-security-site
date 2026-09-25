@@ -1,6 +1,7 @@
 import type { MarkdownInstance } from 'astro';
 export type PostMeta = {
   title: string;
+  metaTitle?: string;
   description: string;
   date: string;
   draft?: boolean;

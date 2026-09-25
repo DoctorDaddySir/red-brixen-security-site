@@ -16,6 +16,10 @@ for (const required of [
   assert(pages.includes(required), `Missing page: ${required}`);
 for (const file of pages) {
   const html = readFileSync(join('dist', file), 'utf8');
+  if (file.startsWith('research/')) {
+    assert.match(html, /http-equiv="refresh"/);
+    continue;
+  }
   assert.match(html, /<main[^>]*id="main"/);
   assert.match(html, /rel="canonical"/);
   assert.equal(

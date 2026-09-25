@@ -13,7 +13,7 @@ const { Content, frontmatter: meta } = post;
 ---
 
 <Base
-  title={`${meta.title} | Red Brixen Security`}
+  title={`${meta.metaTitle ?? meta.title} | Red Brixen Security`}
   description={meta.description}
 >
   <article class="shell writing-post">

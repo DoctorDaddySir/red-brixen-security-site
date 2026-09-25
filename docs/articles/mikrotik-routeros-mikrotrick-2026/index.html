@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="CERT Polska observed attackers compromising internet-facing MikroTik routers. We examine CVE-2026-86060, CVE-2026-67277 and the larger lesson."><link rel="canonical" href="https://redbrixen.com/articles/mikrotik-routeros-mikrotrick-2026/"><meta property="og:type" content="website"><meta property="og:site_name" content="Red Brixen Security"><meta property="og:title" content="MikroTik MikroTrick: RouterOS Attacks Explained | Red Brixen Security"><meta property="og:description" content="CERT Polska observed attackers compromising internet-facing MikroTik routers. We examine CVE-2026-86060, CVE-2026-67277 and the larger lesson."><meta property="og:url" content="https://redbrixen.com/articles/mikrotik-routeros-mikrotrick-2026/"><meta name="color-scheme" content="dark light"><meta name="theme-color" content="#17191a"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>MikroTik MikroTrick: RouterOS Attacks Explained | Red Brixen Security</title><script>
+      try {
+        const saved = localStorage.getItem('rb-theme');
+        if (saved === 'light' || saved === 'dark')
+          document.documentElement.dataset.theme = saved;
+      } catch {}
+    </script><link rel="stylesheet" href="/_astro/Base.DUHU6H8K.css"></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header shell"><a href="/" class="brand" aria-label="Red Brixen Security — home"><svg aria-hidden="true" viewBox="0 0 32 32" width="32" height="32"><path fill="currentColor" d="M2 4h15v10H2zm18 0h10v10H20zM2 18h10v10H2zm13 0h15v10H15z"></path></svg><span>RED BRIXEN<span class="brand-sub">SECURITY</span></span></a><nav aria-label="Main navigation"><a href="/#work">Selected work</a><a href="/about/">About Trent</a><a href="/writeups/">Writeups</a><a href="/articles/">Articles</a><a class="nav-contact" href="/#contact">Let’s connect <span aria-hidden="true">↗</span></a></nav><button class="theme-toggle" type="button" aria-label="Switch to light theme" title="Switch color theme"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"></path></svg></button></header><script type="module">var e=document.querySelector(`.theme-toggle`),t=()=>{let t=document.documentElement.dataset.theme===`light`;e?.setAttribute(`aria-label`,`Switch to ${t?`dark`:`light`} theme`)};t(),e?.addEventListener(`click`,()=>{let e=document.documentElement.dataset.theme===`light`?`dark`:`light`;document.documentElement.dataset.theme=e;try{localStorage.setItem(`rb-theme`,e)}catch{}t()});</script><main id="main" tabindex="-1"><article class="shell writing-post"><header class="writing-hero"><a class="text-link" href="/articles/">← All articles</a><p class="eyebrow">SECURITY ARTICLE · <time datetime="2026-09-25">September 25, 2026</time></p><h1>MikroTrick and RouterOS: Why the Router Is Becoming an Attacker&#39;s Foothold</h1><p class="lead">CERT Polska observed attackers compromising internet-facing MikroTik routers. We examine CVE-2026-86060, CVE-2026-67277 and the larger lesson.</p><p>By Trent Shelton</p></header><div class="post-body"><h2 id="executive-summary">Executive Summary</h2>
+<p>September 2026 produced one of the more instructive router-security disclosures of the year.</p>
+<p>CERT Polska disclosed six RouterOS vulnerabilities discovered during research coordinated with MikroTik. More importantly, researchers confirmed that attackers were already exploiting a combination of vulnerabilities against routers exposing SSH to the public internet.</p>
+<p>CERT Polska named the attack chain <strong>MikroTrick</strong>.</p>
+<p>CVE-2026-86060 allows manipulation of RouterOS SSH-session privileges through a specially crafted username and can result in full administrative privileges. CVE-2026-67277 is a separate unauthenticated bandwidth-test flaw capable of leaking kernel memory or causing a remote denial of service.</p>
+<p>The important story is bigger than either vulnerability.</p>
+<p>Routers are attractive because they combine internet exposure, privileged network position, weak endpoint visibility and persistent access to traffic flowing between security zones.</p>
+<h2 id="vulnerability-snapshot">Vulnerability Snapshot</h2>
+<table>
+<thead>
+<tr>
+<th>CVE</th>
+<th>Function</th>
+<th>Impact</th>
+<th>CVSS 4.0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CVE-2026-86060</td>
+<td>SSH login</td>
+<td>Privilege manipulation / admin access</td>
+<td>9.2</td>
+</tr>
+<tr>
+<td>CVE-2026-67277</td>
+<td>Bandwidth-test</td>
+<td>Kernel memory disclosure / DoS</td>
+<td>8.8</td>
+</tr>
+</tbody>
+</table>
+<p>Fixed RouterOS releases include <strong>6.49.21, 7.23.4 and 7.24.2</strong>, with 7.25 beta 3 also containing fixes.</p>
+<h2 id="what-is-vulnerable">What Is Vulnerable?</h2>
+<p>CVE-2026-86060 exists in RouterOS SSH login processing.</p>
+<p>CERT Polska found that specially constructed usernames beginning with a prohibited character could manipulate the trusted RouterOS policy mask. The resulting session could receive full administrative privileges.</p>
+<p>CVE-2026-67277 affects the RouterOS bandwidth-test service.</p>
+<p>RouterOS could accept a related connection before the primary session had authenticated. Combined with additional validation problems, an unauthenticated client could cause disclosure of uninitialized kernel packet-buffer data or trigger a system restart.</p>
+<p>These are distinct vulnerabilities and should not be conflated.</p>
+<h2 id="technical-analysis">Technical Analysis</h2>
+<h3 id="cve-2026-86060">CVE-2026-86060</h3>
+<p>The SSH issue is fundamentally a privilege-boundary failure.</p>
+<p>RouterOS mishandled a crafted username during login processing. CERT Polska reports that the resulting session could obtain full administrative RouterOS privileges.</p>
+<p>The key offensive-security lesson is that authentication code is not simply about checking passwords.</p>
+<p>Login processing also transforms usernames, initializes session state, assigns policy masks and establishes privileges.</p>
+<p>A flaw anywhere in that sequence can undermine the entire authentication boundary.</p>
+<h3 id="cve-2026-67277">CVE-2026-67277</h3>
+<p>The bandwidth-test vulnerability demonstrates a different class of state-management failure.</p>
+<p>A secondary connection could reach functionality before the primary session had completed authentication.</p>
+<p>That created access to functionality that should have existed only after successful login.</p>
+<p>CERT Polska describes two resulting consequences: leakage of uninitialized kernel memory and an integer-underflow condition capable of producing abnormal fragmented output and restarting RouterOS.</p>
+<h2 id="observed-exploitation">Observed Exploitation</h2>
+<p>This disclosure contains something defenders rarely get: useful evidence from actual attacks.</p>
+<p>CERT Polska confirmed exploitation against RouterOS systems exposing SSH to the internet.</p>
+<p>Observed log artifacts included failed login activity involving the special crafted username state followed by creation of an unauthorized user.</p>
+<p>Researchers also identified a highly privileged account named <code>ops</code> in observed compromises.</p>
+<p>CERT Polska cautions that absence of these artifacts does <strong>not</strong> prove that a device was never compromised.</p>
+<p>That is an important distinction.</p>
+<p>An IOC identifies evidence that may indicate compromise. It does not define every possible manifestation of the attack.</p>
+<h2 id="attackers-perspective">Attacker’s Perspective</h2>
+<p>Why compromise the router instead of a workstation?</p>
+<p>Because the router already has what the attacker wants: position.</p>
+<p>A router can sit between:</p>
+<ul>
+<li>the internet and internal networks;</li>
+<li>branch locations and headquarters;</li>
+<li>users and cloud services;</li>
+<li>management networks and production infrastructure.</li>
+</ul>
+<p>It may also operate without the endpoint security controls defenders rely upon elsewhere.</p>
+<p>That changes the economics of compromise.</p>
+<h3 id="conceptual-attack-path">Conceptual Attack Path</h3>
+<p>Internet<br>
+↓<br>
+RouterOS SSH exposed<br>
+↓<br>
+Authentication/privilege flaw<br>
+↓<br>
+Administrative RouterOS access<br>
+↓<br>
+Configuration manipulation<br>
+↓<br>
+Persistent router foothold<br>
+↓<br>
+Network observation or tunneling opportunities<br>
+↓<br>
+Potential access toward internal systems</p>
+<p>CERT Polska confirms the exploitation and administrative takeover portions of this chain. Subsequent actions are conceptual possibilities rather than claims about every observed incident.</p>
+<h2 id="defender-detection">Defender Detection</h2>
+<p>MikroTik added a <strong>Flagged</strong> mechanism that checks configuration for known signs of unauthorized modification.</p>
+<p>A critical <code>Flagged</code> log entry should be treated as evidence of potential prior compromise.</p>
+<p>Administrators should also inspect:</p>
+<ul>
+<li>unknown users;</li>
+<li>scripts;</li>
+<li>scheduler tasks;</li>
+<li>proxy configuration;</li>
+<li>tunnels;</li>
+<li>unexpected management access;</li>
+<li>SSH exposure.</li>
+</ul>
+<p>The <code>ops</code> account documented by CERT Polska deserves immediate investigation when present.</p>
+<h2 id="mitigation">Mitigation</h2>
+<p>Upgrade immediately to a fixed release:</p>
+<ul>
+<li>6.49.21;</li>
+<li>7.23.4;</li>
+<li>7.24.2;</li>
+<li>or a later supported version containing the fixes.</li>
+</ul>
+<p>The releases above address the vulnerabilities discussed here. For the related signature-validation flaw CVE-2026-67278, CERT Polska reports that the initial 7.x fixes were incomplete and identifies 7.23.6 and 7.24.3 as corrected releases. Select a supported release that covers all applicable advisories.</p>
+<p>MikroTik also recommends not exposing SSH to untrusted networks. Management should instead be restricted to trusted networks or accessed through a VPN such as WireGuard.</p>
+<p>After patching, inspect configuration for unauthorized changes.</p>
+<p>A router that shows evidence of compromise should be treated as compromised—not merely patched and returned to service without investigation.</p>
+<h2 id="broader-security-lesson">Broader Security Lesson</h2>
+<p>Endpoint-centric security has a blind spot.</p>
+<p>Some of the most useful systems for an attacker are not endpoints at all.</p>
+<p>Routers, VPN concentrators, firewalls, access gateways and management appliances can provide privileged network position while offering substantially less endpoint telemetry.</p>
+<p>For penetration testers, this means infrastructure enumeration should continue after the obvious servers have been identified.</p>
+<p>For defenders, it means asset inventory cannot stop at laptops and servers.</p>
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ul>
+<li>CERT Polska confirmed real-world attacks against exposed RouterOS systems.</li>
+<li>CVE-2026-86060 can lead to full administrative RouterOS privileges.</li>
+<li>CVE-2026-67277 separately enables kernel-memory leakage or remote DoS.</li>
+<li>MikroTik has released fixed RouterOS versions.</li>
+<li>Publicly exposed management protocols dramatically increase risk.</li>
+<li>Routers should be treated as high-value computing platforms, not invisible plumbing.</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li>MikroTik — <em>September 2026 vulnerability</em>. <a href="https://mikrotik.com/supportsec/september-2026-vulnerability/">MikroTik Security Advisory</a></li>
+<li>CERT Polska — <em>Critical vulnerabilities in MikroTik RouterOS are being actively exploited</em>. <a href="https://cert.pl/en/posts/2026/09/vulnerabilities-in-mikrotik-routeros-actively-exploited/">CERT Polska Exploitation Analysis</a></li>
+<li>CERT Polska — <em>Vulnerabilities in MikroTik RouterOS software</em>. <a href="https://cert.pl/en/posts/2026/09/mikrotik-routeros-cve/">CERT Polska Technical Details</a></li>
+</ul>
+<h2 id="red-brixen-research-notes">Red Brixen Research Notes</h2>
+<p><strong>Research Confidence:</strong> High<br>
+<strong>Confirmed Exploitation:</strong> Yes — specifically the documented MikroTrick attack chain<br>
+<strong>Public PoC:</strong> Reverse-engineering material exists; exploit code is not reproduced here<br>
+<strong>CISA KEV:</strong> Yes for relevant actively exploited RouterOS vulnerabilities<br>
+<strong>Primary Sources Consulted:</strong> MikroTik, CERT Polska, CISA-derived CVE/KEV records<br>
+<strong>Last Verified:</strong> September 25, 2026</p>
+</div></article></main><footer class="site-footer shell"><div><a href="/" class="brand compact" aria-label="Red Brixen Security — home"><svg aria-hidden="true" viewBox="0 0 32 32" width="32" height="32"><path fill="currentColor" d="M2 4h15v10H2zm18 0h10v10H20zM2 18h10v10H2zm13 0h15v10H15z"></path></svg><span>RED BRIXEN<span class="brand-sub">SECURITY</span></span></a><p>Offensive perspective. Engineering discipline.</p></div><div class="footer-links"><a href="/about/">Profile</a><a href="/resume/">Résumé</a><a href="/writeups/">Writeups</a><a href="/articles/">Articles</a><a href="https://github.com/DoctorDaddySir">GitHub <span aria-hidden="true">↗</span></a></div><p class="copyright">© 2026 Trent Shelton</p></footer></body></html>
