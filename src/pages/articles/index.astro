@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostListing from '../../components/PostListing.astro';
+---
+
+<Base
+  title="Security Articles | Red Brixen Security"
+  description="Perspectives on penetration testing, application security, and building software that holds up under scrutiny."
+>
+  <section class="writing-hero shell">
+    <p class="eyebrow">ARTICLES / SECURITY + ENGINEERING</p>
+    <h1>Security, examined.</h1>
+    <p class="lead">
+      Perspectives on penetration testing, application security, and building
+      software that holds up under scrutiny.
+    </p>
+  </section>
+  <section class="shell writing-section" aria-label="Articles">
+    <PostListing section="articles" />
+  </section>
+</Base>

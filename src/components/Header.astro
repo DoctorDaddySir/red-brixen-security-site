@@ -14,6 +14,18 @@ const path = Astro.url.pathname.replace(BASE, '');
     >
       About Trent
     </a>
+    <a
+      href={BASE + '/writeups/'}
+      aria-current={path === '/writeups/' ? 'page' : undefined}
+    >
+      Writeups
+    </a>
+    <a
+      href={BASE + '/articles/'}
+      aria-current={path === '/articles/' ? 'page' : undefined}
+    >
+      Articles
+    </a>
     <a class="nav-contact" href={BASE + '/#contact'}>
       Let’s connect <span aria-hidden="true">↗</span>
     </a>

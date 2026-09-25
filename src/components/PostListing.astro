@@ -1,0 +1,53 @@
+---
+import { postsFor, formatDate } from '../lib/posts';
+import { BASE } from '../lib/base';
+interface Props {
+  section: 'writeups' | 'articles';
+}
+const { section } = Astro.props;
+const posts = postsFor(section);
+---
+
+<div class="writing-list">
+  {posts.length ? (
+    posts.map((post) => (
+      <article class="writing-card">
+        <p class="eyebrow">
+          {post.frontmatter.platform ?? 'SECURITY ARTICLE'} ·{' '}
+          <time datetime={String(post.frontmatter.date)}>
+            {formatDate(post.frontmatter.date)}
+          </time>
+        </p>
+        <h2>
+          <a href={`${BASE}/${section}/${post.slug}/`}>
+            {post.frontmatter.title} <span aria-hidden="true">↗</span>
+          </a>
+        </h2>
+        <p>{post.frontmatter.description}</p>
+        {post.frontmatter.tags?.length && (
+          <ul class="writing-tags" aria-label="Topics">
+            {post.frontmatter.tags.map((tag) => (
+              <li>{tag}</li>
+            ))}
+          </ul>
+        )}
+      </article>
+    ))
+  ) : (
+    <div class="writing-empty">
+      <h2>
+        {section === 'writeups'
+          ? 'Every lab has a lesson.'
+          : 'Ideas worth examining.'}
+      </h2>
+      <p>
+        {section === 'writeups'
+          ? 'HTB and THM writeups will appear here as they’re published, with the reasoning behind each step and lessons to take into the next challenge.'
+          : 'Articles on application security, penetration testing, and secure engineering will appear here as they’re published.'}
+      </p>
+      <a class="text-link" href={BASE + '/#work'}>
+        Explore my current projects <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  )}
+</div>

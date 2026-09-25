@@ -1,13 +1,20 @@
 import assert from 'node:assert/strict';
-import { readFileSync, existsSync, statSync } from 'node:fs';
+import { readFileSync, existsSync, statSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 const base = '/';
-for (const file of [
+const pages = readdirSync('dist', { recursive: true }).filter((file) =>
+  String(file).endsWith('.html'),
+);
+for (const required of [
   'index.html',
   'about/index.html',
   'resume/index.html',
+  'writeups/index.html',
+  'articles/index.html',
   '404.html',
-]) {
+])
+  assert(pages.includes(required), `Missing page: ${required}`);
+for (const file of pages) {
   const html = readFileSync(join('dist', file), 'utf8');
   assert.match(html, /<main[^>]*id="main"/);
   assert.match(html, /rel="canonical"/);

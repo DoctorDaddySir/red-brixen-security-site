@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostListing from '../../components/PostListing.astro';
+---
+
+<Base
+  title="HTB & THM Writeups | Red Brixen Security"
+  description="The path through a challenge, the reasoning behind it, and the lessons that carry beyond the lab."
+>
+  <section class="writing-hero shell">
+    <p class="eyebrow">LAB NOTES / HACK THE BOX + TRYHACKME</p>
+    <h1>HTB & THM writeups.</h1>
+    <p class="lead">
+      The path through a challenge, the reasoning behind it, and the lessons
+      that carry beyond the lab.
+    </p>
+  </section>
+  <section class="shell writing-section" aria-label="Writeups">
+    <PostListing section="writeups" />
+  </section>
+</Base>
