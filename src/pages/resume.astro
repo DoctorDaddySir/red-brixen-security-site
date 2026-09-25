@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import { profile, experience, skills, certifications } from '../data/profile';
+import { profile, skills, certifications } from '../data/profile';
+import { resumeExperience } from '../data/resume';
 import { BASE } from '../lib/base';
 ---
 
@@ -41,7 +42,7 @@ import { BASE } from '../lib/base';
     <section class="resume-section">
       <h2>Experience</h2>
       <div>
-        {experience.map((job) => (
+        {resumeExperience.map((job) => (
           <section class="resume-job">
             <div class="resume-job-heading">
               <div>

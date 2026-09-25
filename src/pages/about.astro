@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import SecurityDiagram from '../components/SecurityDiagram.astro';
-import { profile, experience, skills, certifications } from '../data/profile';
+import { profile, profileStory, skills, certifications } from '../data/profile';
 import { BASE } from '../lib/base';
 ---
 
@@ -85,21 +85,22 @@ import { BASE } from '../lib/base';
   <section id="experience" class="experience-section shell section-space">
     <div class="section-heading split-heading">
       <div>
-        <p class="eyebrow">03 / EXPERIENCE</p>
-        <h2>A practical foundation.</h2>
+        <p class="eyebrow">03 / THE STORY SO FAR</p>
+        <h2>Curiosity. Craft. Shared knowledge.</h2>
       </div>
       <a class="text-link" href={BASE + '/resume/'}>
         Full résumé <span aria-hidden="true">↗</span>
       </a>
     </div>
     <div class="experience-list">
-      {experience.map((job) => (
+      {profileStory.map((chapter) => (
         <article>
-          <p class="eyebrow">{job.period}</p>
+          <p class="eyebrow">{chapter.chapter}</p>
           <div>
-            <h3>{job.role}</h3>
-            <p class="company">{job.company}</p>
-            <p>{job.bullets[0]}</p>
+            <h3>{chapter.title}</h3>
+            {chapter.paragraphs.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
           </div>
         </article>
       ))}

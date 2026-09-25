@@ -66,86 +66,69 @@ export const certifications = [
     href: profile.credential,
   },
   {
-    name: 'AWS Certified Cloud Practitioner',
-    issuer: 'Amazon Web Services',
-    detail: '',
-    href: '',
-  },
-  {
     name: 'Artificial Intelligence Master’s Program Certificate',
     issuer: 'Simplilearn',
     detail: 'Professional training certificate',
-    href: '',
+    href: 'https://success.simplilearn.com/936534eb-fec4-4c7b-aa64-244a357b393b#acc.zHV2BMva',
   },
 ];
 
 export const skills = [
   {
-    title: 'Security',
+    title: 'Offensive Security',
     items:
-      'Penetration testing, secure code review, authorization controls, vulnerability remediation, dependency management',
+      'Penetration testing, web and API testing, Active Directory security, attack-path analysis, enumeration, privilege escalation, lateral movement, credential attacks, vulnerability validation, post-exploitation',
   },
   {
-    title: 'Engineering',
+    title: 'Application Security',
     items:
-      'Java 25, Spring Boot, Spring MVC, Hibernate, REST APIs, SOAP, JMS, React',
+      'Secure code review, authentication and authorization testing, threat modeling, vulnerability remediation, dependency security, OWASP methodology, security architecture, secure design, API security, security control validation',
   },
   {
-    title: 'Data & delivery',
+    title: 'Software Engineering',
     items:
-      'Oracle, MySQL, SQL Server, Liquibase, Docker, Git, Gradle, Maven, JUnit, Mockito',
+      'Java 25, Spring Boot, Spring MVC, Hibernate, REST APIs, SOAP, JMS, object-oriented design, backend services, enterprise integrations, distributed systems, React, automated testing',
   },
   {
-    title: 'Scripting',
-    items: 'Python, Bash, PowerShell, JavaScript, SQL, C#',
+    title: 'Security Research & Tooling',
+    items:
+      'Vulnerability research, CVE analysis, exploit reproduction, proof-of-concept development, attack-surface analysis, Burp Suite, Nmap, BloodHound, Impacket, Metasploit, Mimikatz, Rubeus, ffuf, NetExec, Ligolo-ng',
+  },
+  {
+    title: 'Systems, Cloud & Delivery',
+    items:
+      'Linux, Windows, AWS, Docker, networking, virtualization, Git, GitHub Actions, CI/CD, Oracle, MySQL, SQL Server, Liquibase, Gradle, Maven, security lab design',
+  },
+  {
+    title: 'Programming & Technical Leadership',
+    items:
+      'Java, Python, Bash, PowerShell, JavaScript, TypeScript, SQL, C#, automation, CLI development, technical instruction, curriculum development, mentorship, technical writing, security reporting, documentation',
   },
 ];
 
-export const experience = [
+export const profileStory = [
   {
-    role: 'Independent security work & instruction',
-    company: 'Self-employed',
-    period: 'March 2026 — Present',
-    bullets: [
-      'Freelance application-security work informed by secure software development experience.',
-      'Technical instruction, learning materials, and mentorship in cybersecurity and software development.',
+    chapter: 'BUILDING SINCE 1996',
+    title: 'Curiosity came first.',
+    paragraphs: [
+      'I began developing software in 1996, building utilities and experimenting with automation, networking, and software distribution in the early AOL era. Online communities gave me a place to explore how things worked—and what I could make them do.',
+      'That curiosity grew into work on backend services, enterprise integrations, payment systems, and full-stack applications. Getting close to the code is still how I make sense of a system.',
     ],
   },
   {
-    role: 'Software Engineer',
-    company: 'TransConnect Services',
-    period: 'June 2023 — March 2026',
-    bullets: [
-      'Performed secure code reviews, strengthened authorization controls, upgraded dependencies, and remediated vulnerabilities.',
-      'Built and maintained backend services and REST APIs for customer-facing applications, internal systems, and third-party integrations.',
-      'Developed Stripe payment and Comdata service integrations; managed database schema changes with Liquibase across Oracle and MySQL environments.',
+    chapter: 'SECURITY & SOFTWARE',
+    title: 'Follow the question. Understand the weakness.',
+    paragraphs: [
+      'Red Brixen brings together my offensive-security research and application-security work. I explore attack paths, develop tooling, and turn what I learn into testing methodologies and practical engineering improvements.',
+      'Penetration testing and secure coding inform each other: understanding how software is built helps me test it, and understanding how it fails helps me build it better.',
     ],
   },
   {
-    role: 'Software Developer',
-    company: 'Hare Media Group',
-    period: 'October 2022 — March 2023',
-    bullets: [
-      'Helped build a Background Check as a Service platform supporting sensitive-data workflows.',
-      'Developed Java and Spring Boot services integrating third-party data providers, with ingestion, normalization, and report-generation logic.',
-    ],
-  },
-  {
-    role: 'Software Developer',
-    company: 'GenSpark',
-    period: 'March 2022 — October 2022',
-    bullets: [
-      'Developed full-stack applications and REST APIs using Java, Spring Boot, Spring MVC, React, and MySQL.',
-      'Designed database schemas, optimized SQL queries, and wrote unit tests with JUnit and Mockito.',
-    ],
-  },
-  {
-    role: 'Tax Examiner & Lead Instructor',
-    company: 'Internal Revenue Service',
-    period: 'January 2020 — March 2022',
-    bullets: [
-      'Examined federal tax returns and researched complex records in a high-volume environment.',
-      'Selected as a lead instructor across three onboarding cohorts; developed supplemental training materials and mentored new examiners.',
+    chapter: 'TEACHING & SHARING',
+    title: 'Make the knowledge useful.',
+    paragraphs: [
+      'I enjoy helping people find their way into difficult technical ideas. I create hands-on labs, demonstrations, and learning materials covering programming, ethical hacking, and security methodology.',
+      'My time examining tax returns and leading onboarding instruction at the IRS also shaped how I approach complex systems: be precise, document the reasoning, and help the next person understand it.',
     ],
   },
 ];
