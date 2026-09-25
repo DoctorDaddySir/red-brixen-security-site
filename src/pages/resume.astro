@@ -25,7 +25,9 @@ import { BASE } from '../lib/base';
       <p class="resume-focus">Penetration testing & secure coding</p>
       <div class="resume-contact">
         <span>{profile.location}</span>
-        <a href={'mailto:' + profile.email}>{profile.email}</a>
+        <a href={BASE + '/contact/'}>
+          Contact via form <span aria-hidden="true">↗</span>
+        </a>
         <a href={profile.github}>github.com/DoctorDaddySir</a>
       </div>
     </header>

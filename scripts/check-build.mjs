@@ -16,10 +16,15 @@ for (const required of [
   assert(pages.includes(required), `Missing page: ${required}`);
 for (const file of pages) {
   const html = readFileSync(join('dist', file), 'utf8');
+  // No rendered page should leak a mailto: contact link; all CTAs use /contact/.
+  assert(!html.includes('mailto:'), `${file}: must not contain mailto: links`);
   if (file.startsWith('research/')) {
     assert.match(html, /http-equiv="refresh"/);
     continue;
   }
+  // API routes serve JSON, not HTML documents; structural HTML assertions
+  // below do not apply to them.
+  if (file.startsWith('api/')) continue;
   assert.match(html, /<main[^>]*id="main"/);
   assert.match(html, /rel="canonical"/);
   assert.equal(

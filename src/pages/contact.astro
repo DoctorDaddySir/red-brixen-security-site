@@ -1,0 +1,117 @@
+---
+import Base from '../layouts/Base.astro';
+import { BASE } from '../lib/base';
+import { REASON_OPTIONS } from '../lib/contact/constants.js';
+
+const endpoint =
+  (import.meta.env as Record<string, string | undefined>)
+    .PUBLIC_CONTACT_ENDPOINT || BASE + '/api/contact/';
+---
+
+<Base
+  title="Contact | Red Brixen Security"
+  description="Reach out about security consulting, job opportunities, collaboration, speaking, or teaching. First-party form; replies within a few business days."
+>
+  <section class="shell section-space">
+    <p class="eyebrow">CONTACT</p>
+    <h1>Let’s compare notes.</h1>
+    <p class="contact-lead">
+      I’m usually reachable for security consulting, engineering and security
+      roles, conference speaking, and collaborations that sit at the boundary of
+      offense and engineering. Fill out the form and I’ll get back to you within
+      a few business days.
+    </p>
+  </section>
+
+  <section class="shell section-space">
+    <form
+      id="contact-form"
+      class="contact-form"
+      data-endpoint={endpoint}
+      method="POST"
+      action={endpoint}
+      novalidate
+      data-state="idle"
+    >
+      <div class="contact-fields">
+        <div class="contact-field" data-field="name">
+          <label for="contact-name">Name</label>
+          <input
+            type="text"
+            id="contact-name"
+            name="name"
+            maxlength={80}
+            autocomplete="name"
+            required
+          />
+        </div>
+        <div class="contact-field" data-field="email">
+          <label for="contact-email">Email</label>
+          <input
+            type="email"
+            id="contact-email"
+            name="email"
+            maxlength={254}
+            autocomplete="email"
+            required
+          />
+        </div>
+        <div class="contact-field" data-field="reason">
+          <label for="contact-reason">Reason for contact</label>
+          <select id="contact-reason" name="reason" required>
+            <option value="" disabled selected>
+              Choose a reason
+            </option>
+            {REASON_OPTIONS.map((label) => {
+              const value = label.toLowerCase().replace(/\s+/g, '-');
+              return <option value={value}>{label}</option>;
+            })}
+          </select>
+        </div>
+        <div class="contact-field" data-field="message">
+          <label for="contact-message">Message</label>
+          <textarea
+            id="contact-message"
+            name="message"
+            rows={6}
+            maxlength={2000}
+            placeholder="What’s this about?"
+            required
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="visually-hidden">
+        <label for="contact-website">Leave this blank</label>
+        <input
+          type="text"
+          id="contact-website"
+          name="website"
+          tabindex={-1}
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="contact-actions">
+        <button type="submit" class="button" data-submit>
+          <span class="btn-label">Send message</span>
+        </button>
+        <p
+          id="form-status"
+          class="form-status"
+          role="status"
+          aria-live="polite"
+        ></p>
+      </div>
+
+      <p class="reference-note">
+        You will receive a reference ID (for example
+        <code>RBS-260925-A7F2</code>) once your message is accepted.
+      </p>
+    </form>
+  </section>
+</Base>
+
+<script type="module">
+  import('../lib/contact/form.js');
+</script>

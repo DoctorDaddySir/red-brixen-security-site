@@ -174,12 +174,14 @@ import { BASE } from '../lib/base';
     <p class="eyebrow">GOOD WORK STARTS WITH A CONVERSATION</p>
     <div>
       <h2>Let’s compare notes.</h2>
-      <a class="button button-outline" href={'mailto:' + profile.email}>
+      <a class="button button-outline" href={BASE + '/contact/'}>
         Get in touch <span aria-hidden="true">↗</span>
       </a>
     </div>
     <p>
-      <a href={'mailto:' + profile.email}>{profile.email}</a>
+      <a href={BASE + '/contact/'}>
+        Send a message via the contact form <span aria-hidden="true">↗</span>
+      </a>
     </p>
   </section>
 </Base>

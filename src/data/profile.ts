@@ -5,7 +5,6 @@ export const profile = {
   introduction:
     'I work at the intersection of offensive security and software engineering. My focus is understanding how applications break—and how to build them better.',
   github: 'https://github.com/DoctorDaddySir',
-  email: 'trent.shelton.primary@gmail.com',
   credential:
     'https://credentials.offsec.com/e09b9888-70b7-4542-a8cc-a308d86728d5',
 };
@@ -52,7 +51,7 @@ export const projects = [
     description:
       'An operator-driven CLI project for organizing penetration-testing engagements, terminal sessions, and the evidence they produce.',
     tags: ['Java', 'CLI tooling', 'Workflow design'],
-    href: 'mailto:trent.shelton.primary@gmail.com?subject=Let%E2%80%99s%20talk%20about%20Pentai',
+    href: '/contact/?reason=collaboration',
     visual: 'pentai',
     status: 'Private project · In development',
   },
