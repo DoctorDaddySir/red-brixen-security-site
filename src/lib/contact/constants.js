@@ -52,8 +52,6 @@ export const RATE_LIMIT = {
 
 export const REFERENCE_PREFIX = 'RBS';
 
-// Where the client form posts. Operators set this to the deployed function
-// URL via the PUBLIC_CONTACT_ENDPOINT environment variable. When unset, the
-// client falls back to a local development endpoint. This value is public
-// (it only accepts form submissions) and contains no secret.
-export const DEFAULT_ENDPOINT = 'http://127.0.0.1:4000/api/contact';
+// Public Railway endpoint. PUBLIC_CONTACT_ENDPOINT overrides this at build time.
+// GitHub Pages serves only static files and cannot handle contact submissions.
+export const DEFAULT_ENDPOINT = 'https://api.redbrixen.com/contact';

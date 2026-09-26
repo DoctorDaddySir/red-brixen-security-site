@@ -8,6 +8,7 @@ const pages = readdirSync('dist', { recursive: true }).filter((file) =>
 for (const required of [
   'index.html',
   'about/index.html',
+  'contact/index.html',
   'resume/index.html',
   'writeups/index.html',
   'articles/index.html',
@@ -59,6 +60,21 @@ for (const file of pages) {
     );
   }
 }
+const contact = readFileSync('dist/contact/index.html', 'utf8');
+assert.match(contact, /<form[^>]*id="contact-form"/);
+assert.match(contact, /data-endpoint="https:\/\/api\.redbrixen\.com\/contact"/);
+assert.match(contact, /action="https:\/\/api\.redbrixen\.com\/contact"/);
+assert(
+  !contact.includes('../lib/contact/form.js'),
+  'Contact script must be bundled',
+);
+assert(
+  !contact.includes("console.log('[contact]"),
+  'No debug text in contact HTML',
+);
+assert(!existsSync('dist/api/contact'), 'The contact API belongs on Railway');
+assert.equal(readFileSync('dist/CNAME', 'utf8').trim(), 'redbrixen.com');
+assert(existsSync('dist/.nojekyll'));
 assert(existsSync('dist/sitemap.xml'));
 console.log(
   'Built pages: navigation, local assets, indexing, headings, and size checks passed.',

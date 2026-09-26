@@ -1,9 +1,8 @@
 name: Deploy to GitHub Pages
 
-# Builds the static Astro site and deploys the /dist output to GitHub Pages.
-# Internal links and assets are prefixed with the project base path
-# (config.base), so the site resolves correctly under the
-# /red-brixen-security-site/ subpath that GitHub Pages assigns to this repo.
+# Optional template, inactive until installed under .github/workflows/ and
+# Pages is switched from master:/docs to GitHub Actions.
+# Deploy the static dist/ output at the redbrixen.com custom-domain root.
 
 on:
   push:
@@ -29,6 +28,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run verify
+        env:
+          PUBLIC_CONTACT_ENDPOINT: https://api.redbrixen.com/contact
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact

@@ -1,11 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
-import { BASE } from '../lib/base';
-import { REASON_OPTIONS } from '../lib/contact/constants.js';
+import { DEFAULT_ENDPOINT, REASON_OPTIONS } from '../lib/contact/constants.js';
 
 const endpoint =
-  (import.meta.env as Record<string, string | undefined>)
-    .PUBLIC_CONTACT_ENDPOINT || BASE + '/api/contact/';
+  (
+    import.meta.env as Record<string, string | undefined>
+  ).PUBLIC_CONTACT_ENDPOINT?.trim() || DEFAULT_ENDPOINT;
 ---
 
 <Base
@@ -112,6 +112,6 @@ const endpoint =
   </section>
 </Base>
 
-<script type="module">
-  import('../lib/contact/form.js');
+<script>
+  import '../lib/contact/form.js';
 </script>

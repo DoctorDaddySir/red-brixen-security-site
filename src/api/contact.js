@@ -1,9 +1,6 @@
 import http from 'node:http';
 
-import {
-  handleRequest,
-  defaultDeps,
-} from '../lib/contact/handler.js';
+import { handleRequest, defaultDeps } from '../lib/contact/handler.js';
 
 const PORT = Number(process.env.PORT) || 3000;
 const ALLOWED_ORIGIN =
@@ -32,8 +29,7 @@ function withCors(response) {
  */
 async function toWebRequest(req) {
   const host = req.headers.host || `localhost:${PORT}`;
-  const protocol =
-    req.headers['x-forwarded-proto'] || 'http';
+  const protocol = req.headers['x-forwarded-proto'] || 'http';
 
   const url = `${protocol}://${host}${req.url}`;
 
