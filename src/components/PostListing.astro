@@ -6,32 +6,60 @@ interface Props {
 }
 const { section } = Astro.props;
 const posts = postsFor(section);
+
+// Group posts by `category`, preserving the newest-first sort within each
+// group. Categories appear in first-seen order (the newest post's category
+// first). Posts without a category fall into an 'Uncategorized' group.
+const groupOrder: string[] = [];
+const groups = new Map<string, typeof posts>();
+for (const post of posts) {
+  const category = post.frontmatter.category ?? 'Uncategorized';
+  if (!groups.has(category)) {
+    groups.set(category, []);
+    groupOrder.push(category);
+  }
+  groups.get(category)!.push(post);
+}
+// Category section headers only add structure when there is more than one
+// category (e.g. the articles index). A single category reads cleanly as a
+// flat list (e.g. the writeups index).
+const showCategoryHeaders = groupOrder.length > 1;
 ---
 
 <div class="writing-list">
   {posts.length ? (
-    posts.map((post) => (
-      <article class="writing-card">
-        <p class="eyebrow">
-          {post.frontmatter.platform ?? 'SECURITY ARTICLE'} ·{' '}
-          <time datetime={String(post.frontmatter.date)}>
-            {formatDate(post.frontmatter.date)}
-          </time>
-        </p>
-        <h2>
-          <a href={`${BASE}/${section}/${post.slug}/`}>
-            {post.frontmatter.title} <span aria-hidden="true">↗</span>
-          </a>
-        </h2>
-        <p>{post.frontmatter.description}</p>
-        {post.frontmatter.tags?.length && (
-          <ul class="writing-tags" aria-label="Topics">
-            {post.frontmatter.tags.map((tag) => (
-              <li>{tag}</li>
-            ))}
-          </ul>
+    groupOrder.map((category) => (
+      <section class="writing-category-group">
+        {showCategoryHeaders && (
+          <h2 class="writing-category-title">{category}</h2>
         )}
-      </article>
+        {groups.get(category)!.map((post) => (
+          <article class="writing-card">
+            <p class="eyebrow">
+              {post.frontmatter.platform ??
+                post.frontmatter.category ??
+                'SECURITY ARTICLE'}{' '}
+              ·{' '}
+              <time datetime={String(post.frontmatter.date)}>
+                {formatDate(post.frontmatter.date)}
+              </time>
+            </p>
+            <h3>
+              <a href={`${BASE}/${section}/${post.slug}/`}>
+                {post.frontmatter.title} <span aria-hidden="true">↗</span>
+              </a>
+            </h3>
+            <p>{post.frontmatter.description}</p>
+            {post.frontmatter.tags?.length && (
+              <ul class="writing-tags" aria-label="Topics">
+                {post.frontmatter.tags.map((tag) => (
+                  <li>{tag}</li>
+                ))}
+              </ul>
+            )}
+          </article>
+        ))}
+      </section>
     ))
   ) : (
     <div class="writing-empty">

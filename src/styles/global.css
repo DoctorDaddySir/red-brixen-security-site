@@ -1723,3 +1723,79 @@ p {
   white-space: nowrap !important;
   border: 0 !important;
 }
+.share-bar {
+  max-width: 780px;
+  margin: 48px auto 0;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+.share-bar .eyebrow {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+.share-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line);
+  padding: 9px 13px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.07em;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+.share-btn svg {
+  width: 16px;
+  height: 16px;
+}
+.share-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.post-preview-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  margin-bottom: 32px;
+}
+@media (max-width: 720px) {
+  .post-preview-image {
+    border-radius: 2px;
+  }
+}
+
+/* Category grouping labels for index listings.
+   Accent color sets them apart from article titles (which inherit --text). */
+.writing-category-title {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 36px 0 16px;
+}
+.writing-category-group + .writing-category-group {
+  margin-top: 28px;
+}

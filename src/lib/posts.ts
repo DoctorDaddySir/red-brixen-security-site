@@ -1,8 +1,24 @@
 import type { MarkdownInstance } from 'astro';
+export type Category =
+  'Vulnerability Analysis' | 'Threat Research' | 'Lab Writeup';
+
 export type PostMeta = {
   title: string;
   metaTitle?: string;
   description: string;
+  /** Classify the post for grouping on the index pages. Controls the section
+   * heading under which the post appears in `PostListing`. */
+  category?: Category;
+  preview_image?: string;
+  preview_image_alt?: string;
+  /**
+   * Toggle whether `preview_image` is rendered inline at the top of the
+   * article/writeup body. The image is always emitted as the `og:image` /
+   * `twitter:image` meta tag for LinkedIn rich-link previews regardless of
+   * this flag, so link unfurls stay consistent even when the inline image is
+   * suppressed. Defaults to `true` when `preview_image` is present.
+   */
+  preview_in_article?: boolean;
   date: string;
   draft?: boolean;
   platform?: 'HTB' | 'THM';

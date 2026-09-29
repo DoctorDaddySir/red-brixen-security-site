@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import SocialShare from '../../components/SocialShare.astro';
 import { postsFor, formatDate } from '../../lib/posts';
 import { BASE } from '../../lib/base';
 export function getStaticPaths() {
@@ -15,6 +16,9 @@ const { Content, frontmatter: meta } = post;
 <Base
   title={`${meta.title} | Red Brixen Security`}
   description={meta.description}
+  image={meta.preview_image}
+  imageAlt={meta.preview_image_alt}
+  type="article"
 >
   <article class="shell writing-post">
     <header class="writing-hero">
@@ -30,7 +34,19 @@ const { Content, frontmatter: meta } = post;
       <p>By Trent Shelton</p>
     </header>
     <div class="post-body">
+      {meta.preview_image && meta.preview_in_article !== false && (
+        <img
+          src={BASE + meta.preview_image}
+          alt={meta.preview_image_alt ?? ''}
+          class="post-preview-image"
+          loading="lazy"
+          decoding="async"
+          width="1200"
+          height="630"
+        />
+      )}
       <Content />
     </div>
+    <SocialShare />
   </article>
 </Base>

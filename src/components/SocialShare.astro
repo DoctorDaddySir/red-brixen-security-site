@@ -1,0 +1,99 @@
+---
+interface Props {
+  /** Canonical URL to share. Defaults to the current page URL. */
+  url?: string;
+}
+const { url: propUrl } = Astro.props;
+
+const site = Astro.site ?? 'https://redbrixen.com';
+const pageUrl = propUrl ?? new URL(Astro.url.pathname, site).href;
+
+const encodedUrl = encodeURIComponent(pageUrl);
+// LinkedIn's share-offsite endpoint reads Open Graph metadata already
+// emitted by the Base layout (og:title, og:description, og:url, og:type).
+const linkedinHref = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
+---
+
+<div class="share-bar">
+  <span class="eyebrow">Share</span>
+  <ul class="share-list" role="list">
+    <li>
+      <a
+        class="share-btn"
+        href={linkedinHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Share on LinkedIn (opens in new window)"
+        title="Share on LinkedIn"
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16">
+          <path
+            fill="currentColor"
+            d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.63H9V9h3.41v1.56h.05c.48-.9 1.64-1.86 3.36-1.86 3.6 0 4.26 2.37 4.26 5.45v6.3zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.28V1.72C24 .77 22.22 0 22.22 0z"
+          />
+        </svg>
+        LinkedIn
+      </a>
+    </li>
+    <li>
+      <button
+        type="button"
+        class="share-btn share-copy"
+        data-share-url={pageUrl}
+        aria-label="Copy link"
+        title="Copy link"
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16">
+          <rect
+            x="9"
+            y="9"
+            width="13"
+            height="13"
+            rx="2"
+            ry="2"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          />
+          <path
+            d="M5 15a2 2 0 0 1 2-2h9"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          />
+          <path
+            d="M9 19a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H9z"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          />
+        </svg>
+        <span class="copy-label">Copy link</span>
+      </button>
+    </li>
+  </ul>
+</div>
+
+<script>
+  const copyBtn = document.querySelector<HTMLButtonElement>('.share-copy');
+  if (copyBtn) {
+    const label = copyBtn.querySelector('.copy-label');
+    const originalText = label?.textContent ?? 'Copy link';
+    copyBtn.addEventListener('click', async () => {
+      const target =
+        copyBtn.getAttribute('data-share-url') ?? window.location.href;
+      try {
+        await navigator.clipboard.writeText(target);
+      } catch {
+        /* Copy may be unavailable in some embed contexts. */
+      }
+      if (label) label.textContent = 'Copied!';
+      copyBtn.setAttribute('aria-label', 'Link copied');
+      setTimeout(() => {
+        if (label) label.textContent = originalText;
+        copyBtn.setAttribute('aria-label', 'Copy link');
+      }, 2000);
+    });
+  }
+</script>
