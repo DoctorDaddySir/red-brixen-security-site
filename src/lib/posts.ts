@@ -1,6 +1,9 @@
 import type { MarkdownInstance } from 'astro';
 export type Category =
-  'Vulnerability Analysis' | 'Threat Research' | 'Lab Writeup';
+  | 'Vulnerability Analysis'
+  | 'Threat Research'
+  | 'Lab Writeup'
+  | 'Mindset & Practice';
 
 export type PostMeta = {
   title: string;
